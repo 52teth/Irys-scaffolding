@@ -65,7 +65,7 @@ my $refaligner_version='UNKNOWN'; # Was 3520 at the time this code was written
 ##############         Print informative message                ##################
 ##################################################################################
 print "###########################################################\n";
-print "#  write_report.pl Version 1.0.1                          #\n";
+print "#  write_report.pl Version 1.0.2                          #\n";
 print "#                                                         #\n";
 print "#  Created by Jennifer Shelton 2/26/15                    #\n";
 print "#  github.com/i5K-KINBRE-script-share/Irys-scaffolding    #\n";
@@ -104,7 +104,7 @@ pod2usage(1) if $help;
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 if ($version)
 {
-    print "run_compare.pl Version 1.0.1\n";
+    print "run_compare.pl Version 1.0.2\n";
     exit;
 }
 ###########################################################
@@ -427,11 +427,13 @@ unless($de_novo)
     print "Preparing structural variant calls...\n\n";
     my @sv_directories = glob "${best_dir}/contigs/*refineFinal1_sv/merged_smaps";
     my @sv_calls_workeds = glob "${best_dir}/contigs/*refineFinal1_sv/merged_smaps/*_refineFinal1_merged_filter.bed"; # This file should exist if structural variants were found
+    my @sv_calls_worked_olds = glob "${best_dir}/contigs/*refineFinal1_sv/merged_smaps/*_refineFinal1_merged.bed"; # This file should exist if structural variants were found
     my $sv_directory = $sv_directories[0];
     my $sv_calls_worked = $sv_calls_workeds[0];
+    my $sv_calls_worked_old = $sv_calls_worked_olds[0];
     if (($sv_directory) && (-d "$sv_directory"))
     {
-        if ( -f "$sv_calls_worked")
+        if (( -f "$sv_calls_worked") || ( -f "$sv_calls_worked_old"))
         {
             symlink ($sv_directory,"$report_dir/merged_smaps") or warn "FYI: SV detect may not have been run because script can't link $sv_directory to $report_dir/merged_smaps : $!"; # make a soft link for the directory with SV call files and all supporting files (required by IrysView)
         }
@@ -601,6 +603,12 @@ __END__
 write_report.pl - a script that compiles final assembly metrics, prepares output files and writes a report for the "best" assembly in all of the possible directories:'strict_t', 'default_t', 'relaxed_t', etc. These assemblies are created using Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/AssembleIrysXeonPhi.pl from https://github.com/i5K-KINBRE-script-share/Irys-scaffolding. The parameter `-b` is the directory with the "contigs" subdirectory created for the "best" assembly.
 
 Copy script into assembly working directory and update other variables for project in "Project variables" section or run original script by adding the equivalent flags and values to your command. To do the former cd to the assembly working directory and "cp ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/write_report.pl ." and then edit the new version to point to the best asssembly or the best assembly CMAP, etc.
+ 
+=head1 UPDATES
+ 
+B<write_report.pl Version 1.0.2>
+ 
+Script can find old and new output smap filenames.
 
 =head1 USAGE
 
@@ -716,32 +724,7 @@ The RefAligner p-value threshold (default = 1e-8).
 
 =back
 
-=head1 DESCRIPTION
 
-B<OUTPUT DETAILS:>
-
-The script outputs an XMAP with only molecules that scaffold contigs and an XMAP of all high quality alignments. Both XMAPs can be imported and viewed in the IrysView "comparisons" window if the original r.cmap and q.cmap are in the same folder when you import.
-
-The script also lists summary metrics in a csv file.
-
-In the same csv file, scaffolds that have alignments passing the user-defined length and confidence thresholds that align over less than 60% of the total length possible are listed. These may represent mis-assembled scaffolds.
-
-In the same csv file, high quality but overlaping alignments in a csv file are listed. These may be candidates for further assembly using the overlaping contigs and paired end reads.
-
-The script also creates a non-redundant (i.e. no scaffold is used twice) super-scaffold from a user-provided scaffold file and a filtered XMAP. If two scaffolds overlap on the superscaffold then a 100 "n" gap is used as a spacer between them. If adjacent scaffolds do not overlap on the super-scaffold than the distance between the begining and end of each scaffold reported in the XMAP is used as the gap length. If a scaffold has two high quality alignments the longest alignment is selected. If both alignments are equally long the alignment with the highest confidence is selected.
-
-The script also outputs contigs, an agp, and a bed file of contigs within superscaffolds from the final super-scaffold fasta file.
-
-
-B<QUICK START:>
-
-git clone https://github.com/i5K-KINBRE-script-share/Irys-scaffolding
-
-cd Irys-scaffolding/KSU_bioinfo_lab/stitch
-
-mkdir results
-
-perl stitch.pl -r sample_data/sample.r.cmap -x sample_data/sample.xmap -f sample_data/sample_scaffold.fasta -o results/test_output --f_con 15 --f_algn 30 --s_con 6 --s_algn 90
 
 =cut
 
