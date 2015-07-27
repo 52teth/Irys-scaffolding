@@ -42,7 +42,7 @@ my $best_dir =''; # no trailing slash (e.g. /home/bionano/bionano/Trib_cast_0002
 ##############         Print informative message               ##################
 #################################################################################
 print "###########################################################\n";
-print "#  sewing_machine.pl Version 1.0.4                        #\n";
+print "#  sewing_machine.pl Version 1.0.5                        #\n";
 print "#                                                         #\n";
 print "#  Created by Jennifer Shelton 5/05/15                    #\n";
 print "#  github.com/i5K-KINBRE-script-share/Irys-scaffolding    #\n";
@@ -85,7 +85,7 @@ pod2usage(1) if $help;
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 if ($version)
 {
-    print "sewing_machine.pl Version 1.0.3\n";
+    print "sewing_machine.pl Version 1.0.5\n";
     exit;
 }
 unless (($best_dir) || (($out) && ($genome_maps)))
@@ -151,9 +151,9 @@ unless(( -f $fasta) && ( -f $reference_maps) && (-f $genome_map_cmap))
 {
       die "File paths passed as arguments or added to the the \"Default variables\" section of sewing_machine.pl are not valid. Remember to add all required flags and values to your command or copy the sewing_machine.pl script into your assembly working directory and update required variables for project in \"Default variables\" section. Run \"perl sewing_machine.pl -help\" for mor details.\n";
 }
-unless($enzyme =~ /(BspQI|BbvCI|BsrDI|bseCI)/)
+unless($enzyme =~ /(BspQI|BbvCI|BsrDI|bseCI|BsmI)/)
 {
-    die "Enzymes passed as arguments or listed in the \"Default variables\" section of sewing_machine.pl are not valid. Valid entries would be a space separated list that includes one or more of the following options \"BspQI BbvCI BsrDI bseCI\" ( e.g. -e \"BspQI BbvCI\" or -e \"BspQI\"). Remember to add all required flags and values to your command or copy the sewing_machine.pl script into your assembly working directory and update required variables for project in \"Default variables\" section. Run \"perl sewing_machine.pl -help\" for mor details.\n";
+    die "Enzymes passed as arguments or listed in the \"Default variables\" section of sewing_machine.pl are not valid. Valid entries would be a space separated list that includes one or more of the following options \"BspQI BbvCI BsrDI bseCI BsmI\" ( e.g. -e \"BspQI BbvCI\" or -e \"BspQI\"). Remember to add all required flags and values to your command or copy the sewing_machine.pl script into your assembly working directory and update required variables for project in \"Default variables\" section. Run \"perl sewing_machine.pl -help\" for mor details.\n";
 }
 my %alignment_parameters;
 my @alignments = qw/default_alignment relaxed_alignment/;
@@ -375,6 +375,10 @@ Changed optional flag "-a" to change full RefAligner path from the default "~/to
 B<sewing_machine.pl Version 1.0.4>
  
 Scripts now exits if no xmap is created, e.g. because RefAligner does not run properly.
+ 
+B<sewing_machine.pl Version 1.0.5>
+
+Script now accepts BsmI as an enzyme.
 
 =head1 USAGE
 
@@ -442,7 +446,7 @@ The project name with no spaces, slashes or characters other than underscore (e.
 
 =item B<-e, --enzyme>
  
-A space separated list of the enzymes used to label the molecules and to in silico nick the sequence-based FASTA file. They can include BspQI BbvCI BsrDI bseCI (e.g. -e BspQI). If multiple enzymes were used enclose the list with quotes (e.g. -e "BspQI BbvCI").
+A space separated list of the enzymes used to label the molecules and to in silico nick the sequence-based FASTA file. They can include BspQI BbvCI BsrDI bseCI BsmI(e.g. -e BspQI). If multiple enzymes were used enclose the list with quotes (e.g. -e "BspQI BbvCI").
 
 =item B<-f, --fasta>
 

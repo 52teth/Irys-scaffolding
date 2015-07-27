@@ -29,7 +29,7 @@ my $alignment_parameters="default_alignment";
 # Full path of the directory of the best assembly without trailing slash (e.g. /home/bionano/bionano/Dros_psue_2014_012/default_t_100 )
 my $fasta = ""; # (e.g. /home/bionano/bionano/Trib_cast_0002_final/GCF_000227135_wrapped.fasta)
 my $cmap = ""; #(e.g. /home/bionano/bionano/Trib_cast_0002_final/GCF_000227135_wrapped_BbvCI.cmap)
-my $enzyme= ""; # space separated list that can include BspQI BbvCI BsrDI bseCI (e.g. BspQI)
+my $enzyme= ""; # space separated list that can include BspQI BbvCI BsrDI bseCI BsmI (e.g. BspQI)
 my $f_con="20"; # default value
 my $f_algn="40"; # default value
 my $s_con="15"; # default value
@@ -65,7 +65,7 @@ my $refaligner_version='UNKNOWN'; # Was 3520 at the time this code was written
 ##############         Print informative message                ##################
 ##################################################################################
 print "###########################################################\n";
-print "#  write_report.pl Version 1.0.2                          #\n";
+print "#  write_report.pl Version 1.0.3                          #\n";
 print "#                                                         #\n";
 print "#  Created by Jennifer Shelton 2/26/15                    #\n";
 print "#  github.com/i5K-KINBRE-script-share/Irys-scaffolding    #\n";
@@ -104,7 +104,7 @@ pod2usage(1) if $help;
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 if ($version)
 {
-    print "run_compare.pl Version 1.0.2\n";
+    print "run_compare.pl Version 1.0.3\n";
     exit;
 }
 ###########################################################
@@ -258,7 +258,7 @@ unless ($de_novo)
         die "$error";
     }
 }
-unless($enzyme =~ /(BspQI|BbvCI|BsrDI|bseCI)/)
+unless($enzyme =~ /(BspQI|BbvCI|BsrDI|bseCI|BsmI)/)
 {
     die "write_report.pl cannot find a valid list of enzymes used for molecule labeling or in silico labeling of the reference FASTA. Remember to either copy the write_report.pl script into your assembly working directory and update other variables for project in \"Project variables\" section or add the equivalent flags and values to your command.\nTo do the former cd to the assembly working directory and \"cp ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/write_report.pl .\", then edit the new version's \"Project variables\" section and retry.\n";
 }
@@ -352,10 +352,10 @@ unless($de_novo)
         die "Can't create $report_dir/in_silico_cmap/";
     }
     my (${cmap_filename}, ${cmap_directories}, ${cmap_suffix}) = fileparse($cmap,qr/\.[^.]*/); # directories has trailing slash includes dot in suffix
-    link ($cmap,"$report_dir/in_silico_cmap/${cmap_filename}.cmap" ) or warn "Warning: Can't link $cmap to $report_dir/in_silico_cmap/${cmap_filename}.cmap (this may have been created durring an earlier step): $!";
+    link ($cmap,"$report_dir/in_silico_cmap/${cmap_filename}.cmap" ) or warn "Warning: Can't link $cmap to $report_dir/in_silico_cmap/${cmap_filename}.cmap (this may have been created during an earlier step): $!";
     if (-f "${cmap_directories}${cmap_filename}_key.txt")
     {
-        link ("${cmap_directories}${cmap_filename}_key.txt","$report_dir/in_silico_cmap/${cmap_filename}_key.txt") or warn "Warning: Can't link ${cmap_directories}${cmap_filename}_key.txt to $report_dir/in_silico_cmap/${cmap_filename}_key.txt (this may have been created durring an earlier step): $!";
+        link ("${cmap_directories}${cmap_filename}_key.txt","$report_dir/in_silico_cmap/${cmap_filename}_key.txt") or warn "Warning: Can't link ${cmap_directories}${cmap_filename}_key.txt to $report_dir/in_silico_cmap/${cmap_filename}_key.txt (this may have been created during an earlier step): $!";
     }
     else
     {
@@ -606,6 +606,10 @@ Copy script into assembly working directory and update other variables for proje
  
 =head1 UPDATES
  
+B<write_report.pl Version 1.0.3>
+ 
+Script now accepts BsmI as an enzyme.
+ 
 B<write_report.pl Version 1.0.2>
  
 Script can find old and new output smap filenames.
@@ -675,7 +679,7 @@ The project name with no spaces, slashes or characters other than underscore (e.
 
 =item B<-e, --enzyme>
 
-A space separated list of the enzymes used to label the molecules and to in silico nick the sequence-based FASTA file. They can include BspQI BbvCI BsrDI bseCI (e.g. BspQI). If multiple enzymes were used enclose the list with quotes (e.g. "BspQI BbvCI").
+A space separated list of the enzymes used to label the molecules and to in silico nick the sequence-based FASTA file. They can include BspQI BbvCI BsrDI bseCI BsmI (e.g. BspQI). If multiple enzymes were used enclose the list with quotes (e.g. "BspQI BbvCI").
 
 =item B<-f, --fasta>
 
