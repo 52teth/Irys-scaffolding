@@ -65,7 +65,7 @@ my $refaligner_version='UNKNOWN'; # Was 3520 at the time this code was written
 ##############         Print informative message                ##################
 ##################################################################################
 print "###########################################################\n";
-print "#  write_report.pl Version 1.0.3                          #\n";
+print "#  write_report.pl Version 1.0.4                          #\n";
 print "#                                                         #\n";
 print "#  Created by Jennifer Shelton 2/26/15                    #\n";
 print "#  github.com/i5K-KINBRE-script-share/Irys-scaffolding    #\n";
@@ -104,7 +104,7 @@ pod2usage(1) if $help;
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 if ($version)
 {
-    print "run_compare.pl Version 1.0.3\n";
+    print "run_compare.pl Version 1.0.4\n";
     exit;
 }
 ###########################################################
@@ -145,6 +145,15 @@ die "Option -e or --enzyme not specified.\n" unless $enzyme; # report missing re
 unless ($de_novo)
 {
     die "Option -f or --fasta not specified.\n" unless $fasta; # report missing required variables
+    my $fasta_o_matic = $ENV{"HOME"}."/read-cleaning-format-conversion/KSU_bioinfo_lab/fasta-o-matic/fasta_o_matic.py";
+    # Sanity check FASTA file if possible
+    if (-f $fasta_o_matic)
+    {
+        print "Sanity checking FASTA file...\n";
+        $fasta = `python $fasta_o_matic -f $fasta -c -o $out`;
+        print "\tProperly formatted FASTA file: $fasta\n";
+        print "Done sanity checking FASTA file.\n";
+    }
     die "Option -r or --ref not specified.\n" unless $cmap; # report missing required variables
 }
 ###########################################################
@@ -605,6 +614,10 @@ write_report.pl - a script that compiles final assembly metrics, prepares output
 Copy script into assembly working directory and update other variables for project in "Project variables" section or run original script by adding the equivalent flags and values to your command. To do the former cd to the assembly working directory and "cp ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/write_report.pl ." and then edit the new version to point to the best asssembly or the best assembly CMAP, etc.
  
 =head1 UPDATES
+ 
+B<write_report.pl Version 1.0.4>
+ 
+Script now sanity checks FASTA files with Fasta-O-Matic if it is installed in the home directory at ~/read-cleaning-format-conversion/KSU_bioinfo_lab/fasta-o-matic/fasta_o_matic.py."
  
 B<write_report.pl Version 1.0.3>
  
