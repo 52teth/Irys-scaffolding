@@ -42,7 +42,7 @@ my $best_dir =''; # no trailing slash (e.g. /home/bionano/bionano/Trib_cast_0002
 ##############         Print informative message               ##################
 #################################################################################
 print "###########################################################\n";
-print "#  sewing_machine.pl Version 1.0.5                        #\n";
+print "#  sewing_machine.pl Version 1.0.6                        #\n";
 print "#                                                         #\n";
 print "#  Created by Jennifer Shelton 5/05/15                    #\n";
 print "#  github.com/i5K-KINBRE-script-share/Irys-scaffolding    #\n";
@@ -85,7 +85,7 @@ pod2usage(1) if $help;
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 if ($version)
 {
-    print "sewing_machine.pl Version 1.0.5\n";
+    print "sewing_machine.pl Version 1.0.6\n";
     exit;
 }
 unless (($best_dir) || (($out) && ($genome_maps)))
@@ -150,6 +150,15 @@ else
 unless(( -f $fasta) && ( -f $reference_maps) && (-f $genome_map_cmap))
 {
       die "File paths passed as arguments or added to the the \"Default variables\" section of sewing_machine.pl are not valid. Remember to add all required flags and values to your command or copy the sewing_machine.pl script into your assembly working directory and update required variables for project in \"Default variables\" section. Run \"perl sewing_machine.pl -help\" for mor details.\n";
+}
+my $fasta_o_matic = $ENV{"HOME"}."/read-cleaning-format-conversion/KSU_bioinfo_lab/fasta-o-matic/fasta_o_matic.py";
+# Sanity check FASTA file if possible
+if (-f $fasta_o_matic)
+{
+    print "Sanity checking FASTA file...\n";
+    $fasta = `python $fasta_o_matic -f $fasta -c -o $out`;
+    print "\tProperly formatted FASTA file: $fasta\n";
+    print "Done sanity checking FASTA file.\n";
 }
 unless($enzyme =~ /(BspQI|BbvCI|BsrDI|bseCI|BsmI)/)
 {
@@ -379,6 +388,10 @@ Scripts now exits if no xmap is created, e.g. because RefAligner does not run pr
 B<sewing_machine.pl Version 1.0.5>
 
 Script now accepts BsmI as an enzyme.
+ 
+B<sewing_machine.pl Version 1.0.6>
+
+Script now sanity checks FASTA files with Fasta-O-Matic if it is installed in the home directory at ~/read-cleaning-format-conversion/KSU_bioinfo_lab/fasta-o-matic/fasta_o_matic.py.
 
 =head1 USAGE
 
