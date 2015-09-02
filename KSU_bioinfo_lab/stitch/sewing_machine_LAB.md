@@ -72,13 +72,13 @@ perl ~/Irys-scaffolding/KSU_bioinfo_lab/stitch/sewing_machine.pl -o ~/test-sewin
 Use whichever enzyme was used to label the genomic DNA when creating the single molecule maps on the Irys system for the `-e` parameter. Possible enzymes are `BspQI BbvCI BsmI BsrDI` and `bseCI`. Below is an example of a command to create an in silico map CMAP.
 
 ```
-perl ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/third-party/fa2cmap_multi.pl -v -i ~/sample_assembly_working_directory/fasta_and_cmap/NC_010473_mock_scaffolds.fna -e BspQI
+perl ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/third-party/fa2cmap_multi.pl -v -i ~/Irys-scaffolding/KSU_bioinfo_lab/sample_assembly_working_directory/fasta_and_cmap/NC_010473_mock_scaffolds.fna -e BspQI
 ```
 
 If dual nicking (e.g. with BspQI and BbvCI) was done use a space separated list of enzymes. Below is an example of a command to create an in silico map CMAP using two enzymes.
 
 ```
-perl ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/third-party/fa2cmap_multi.pl -v -i ~/sample_assembly_working_directory/fasta_and_cmap/NC_010473_mock_scaffolds.fna -e BspQI BbvCI
+perl ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/third-party/fa2cmap_multi.pl -v -i ~/Irys-scaffolding/KSU_bioinfo_lab/sample_assembly_working_directory/fasta_and_cmap/NC_010473_mock_scaffolds.fna -e BspQI BbvCI
 ```
 
 ###Step 3: Choose your best alignment parameters and explore your results
@@ -92,7 +92,7 @@ perl ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/write_report.pl -help
 Open the `~/test-sewing-machine-out/NC_010473_mock_scaffolds_BNGCompare.csv` file to find the best alignment parameters. Like choosing the best assembly you want to find a result that balances sensitivity (i.e. long total aligned length) without increasing alignment redundancy excessively. In this case we will use the default alignment in our final report.
 
 ```
-perl ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/write_report.pl -o ~/test-sewing-machine-out -g ~/Irys-scaffolding/KSU_bioinfo_lab/sample_output_directory/BioNano_consensus_cmap/ESCH_COLI_1_2015_000_STRICT_T_150_REFINEFINAL1.cmap -p Esch_coli_1_2015_000 -e BspQI -f ~/sample_assembly_working_directory/fasta_and_cmap/NC_010473_mock_scaffolds.fna -r ~/Irys-scaffolding/KSU_bioinfo_lab/sample_output_directory/in_silico_cmap/NC_010473_mock_scaffolds_BspQI.cmap --alignment_parameters default_alignment
+perl ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/write_report.pl -o ~/test-sewing-machine-out -g ~/Irys-scaffolding/KSU_bioinfo_lab/sample_output_directory/BioNano_consensus_cmap/ESCH_COLI_1_2015_000_STRICT_T_150_REFINEFINAL1.cmap -p Esch_coli_1_2015_000 -e BspQI -f ~/Irys-scaffolding/KSU_bioinfo_lab/sample_assembly_working_directory/fasta_and_cmap/NC_010473_mock_scaffolds.fna -r ~/Irys-scaffolding/KSU_bioinfo_lab/sample_output_directory/in_silico_cmap/NC_010473_mock_scaffolds_BspQI.cmap --alignment_parameters default_alignment
 ```
 
 ###Step 4: Explore your results in IrysView
