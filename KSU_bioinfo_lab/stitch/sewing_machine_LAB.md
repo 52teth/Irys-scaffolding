@@ -97,7 +97,7 @@ perl ~/Irys-scaffolding/KSU_bioinfo_lab/assemble_XeonPhi/write_report.pl -o ~/te
 
 ###Step 4: Explore your results in IrysView
 
-Read your `~/sample_assembly_working_directory/report.txt` file or explore files in your `~/sample_assembly_working_directory/Esch_coli_1_2015_000` final output directory. The contents of the `~/sample_assembly_working_directory/Esch_coli_1_2015_000` directory are also compressed in the `~/sample_assembly_working_directory/Esch_coli_1_2015_000.tar.gz` file. Move this to a windows machine and follow instructions in the https://github.com/i5K-KINBRE-script-share/Irys-scaffolding/blob/master/KSU_bioinfo_lab/assemble_XeonPhi/README.pdf file to view alignments in IrysView.
+Read your `~/test-sewing-machine-out/report.txt` file or explore files in your `~/test-sewing-machine-out/Esch_coli_1_2015_000` final output directory. The contents of the `~/test-sewing-machine-out/Esch_coli_1_2015_000` directory are also compressed in the `~/test-sewing-machine-out/Esch_coli_1_2015_000.tar.gz` file. Move this to a windows machine and follow instructions in the https://github.com/i5K-KINBRE-script-share/Irys-scaffolding/blob/master/KSU_bioinfo_lab/assemble_XeonPhi/README.pdf file to view alignments in IrysView.
 
 Following the instructions for loading an XMAP, first import the XMAP file of the alignment of the original in silico maps to the assembled genome maps. This will be in the `Esch_coli_1_2015_000/align_in_silico_xmap` directory.
 
